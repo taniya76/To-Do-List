@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb+srv://admin-taniya:SrvNiya767@cluster0.z8u2a.mongodb.net/todolistDB", {useNewUrlParser: true});
+mongoose.set('useFindAndModify', false);
 
 const itemsSchema = {
   name: String
@@ -112,7 +113,7 @@ app.post("/", function(req, res){
 app.post("/delete", function(req, res){
   const checkedItemId = req.body.checkbox;
   const listName = req.body.listName;
-
+  console.log(checkedItemId,listName);
   if (listName === "Today") {
     Item.findByIdAndRemove(checkedItemId, function(err){
       if (!err) {
@@ -121,8 +122,10 @@ app.post("/delete", function(req, res){
       }
     });
   } else {
-    List.findOneAndUpdate({name: listName}, {$pull: {items: {_checkedItemId}}}, function(err, foundList){
+
+    List.findOneAndRemove({name: listName}, {$pull: {items: {checkedItemId}}}, function(err, foundList){
       if (!err){
+        console.log(foundList);
         res.redirect("/" + listName);
       }
     });
