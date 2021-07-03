@@ -123,9 +123,10 @@ app.post("/delete", function(req, res){
     });
   } else {
 
-    List.findOneAndRemove({name: listName}, {$pull: {items: {checkedItemId}}}, function(err, foundList){
+    List.findOneAndUpdate({name: listName}, {$pull: {items: {checkedItemId}}},
+    function(err, foundList){
       if (!err){
-        console.log(foundList);
+        // foundList.save();
         res.redirect("/" + listName);
       }
     });
