@@ -15,8 +15,8 @@ app.use(express.urlencoded({
 app.use(express.static("public"));
 
 
-// mongodb+srv://admin-taniya:SrvNiya767@cluster0.z8u2a.mongodb.net/todolistDB
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+// mongodb://localhost:27017/todolistDB
+mongoose.connect("mongodb+srv://admin-taniya:SrvNiya767@cluster0.z8u2a.mongodb.net/todolistDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
